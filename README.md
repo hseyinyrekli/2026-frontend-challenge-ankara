@@ -8,8 +8,7 @@ I’ll describe every change step by step.
 2- After setting up the project, I configured the endpoint in the .env file, implemented a service layer to fetch data using Axios, and handled state management with TanStack Query.
 3- I partially developed the UI, organized the layout and component structure, and used Bootstrap along with pure CSS for styling.
 4- The UI was enhanced by adding a search input for filtering data, and a modal was introduced for the detail view.”
-
-
+5- I set up the routing structure using TanStack File-Based Routing.
 
 
 

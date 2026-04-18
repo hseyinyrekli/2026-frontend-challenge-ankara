@@ -3,7 +3,7 @@ import { EmptyStateCard } from '../components/EmptyStateCard'
 import { FormStatCard } from '../components/FormStatCard'
 import { SearchInput } from '../components/SearchInput'
 import { SubmissionCard } from '../components/SubmissionCard'
-import { MainLayout } from '../layouts/MainLayout'
+import { Timeline } from '../components/Timeline'
 import {
   jotformForms,
   type JotformFormKey,
@@ -22,7 +22,7 @@ export function Home() {
   const selectedFormMeta = jotformForms[selectedForm]
 
   return (
-    <MainLayout>
+    <>
         <section className="dashboard-toolbar">
           <div className="category-actions" aria-label="Veri kategorileri">
             {(Object.entries(jotformForms) as [JotformFormKey, (typeof jotformForms)[JotformFormKey]][]).map(
@@ -62,17 +62,21 @@ export function Home() {
 
         {!selectedQuery.isLoading && !selectedQuery.error && (
           filteredSubmissions.length > 0 ? (
-            <section className="row g-4">
-              {filteredSubmissions.map((submission) => (
-                <div className="col-md-6 col-xl-4" key={submission.id}>
-                  <SubmissionCard submission={submission} />
-                </div>
-              ))}
-            </section>
+            <>
+              <Timeline submissions={filteredSubmissions} />
+
+              <section className="row g-4">
+                {filteredSubmissions.map((submission) => (
+                  <div className="col-md-6 col-xl-4" key={submission.id}>
+                    <SubmissionCard submission={submission} />
+                  </div>
+                ))}
+              </section>
+            </>
           ) : (
             <EmptyStateCard />
           )
         )}
-    </MainLayout>
+    </>
   )
 }

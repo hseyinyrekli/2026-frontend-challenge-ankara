@@ -323,6 +323,141 @@ main {
   line-height: 1.6;
 }
 
+.find-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.55fr);
+  gap: 28px;
+  margin-bottom: 32px;
+  border: 1px solid rgba(184, 190, 205, 0.16);
+  border-radius: 8px;
+  padding: 34px;
+  background: rgba(18, 23, 31, 0.74);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.24);
+}
+
+.find-hero h1 {
+  max-width: 780px;
+  margin: 0 0 18px;
+  color: #f4f1e8;
+  font-size: clamp(42px, 6vw, 76px);
+  line-height: 0.98;
+}
+
+.find-hero p:not(.eyebrow) {
+  max-width: 720px;
+  margin: 0;
+  color: #a8a9b5;
+  font-size: 19px;
+  line-height: 1.65;
+}
+
+.find-panel {
+  display: grid;
+  align-content: center;
+  gap: 22px;
+  border: 1px solid rgba(184, 190, 205, 0.14);
+  border-radius: 8px;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.find-panel dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+}
+
+.find-panel dl div {
+  border: 1px solid rgba(184, 190, 205, 0.12);
+  border-radius: 8px;
+  padding: 14px;
+  background: rgba(5, 8, 13, 0.24);
+}
+
+.find-panel dt,
+.record-source {
+  color: #d2b95d;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.find-panel dd {
+  margin: 4px 0 0;
+  color: #f4f1e8;
+  font-size: 28px;
+  font-weight: 900;
+}
+
+.record-source {
+  margin: 0 0 10px;
+}
+
+.timeline-panel {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.34fr) minmax(0, 1fr);
+  gap: 28px;
+  margin-bottom: 28px;
+  border: 1px solid rgba(184, 190, 205, 0.16);
+  border-radius: 8px;
+  padding: 28px;
+  background: rgba(18, 23, 31, 0.72);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.24);
+}
+
+.timeline-heading h2 {
+  margin: 0;
+  color: #f4f1e8;
+  font-size: clamp(28px, 3vw, 44px);
+  line-height: 1.08;
+}
+
+.timeline-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.timeline-list li {
+  position: relative;
+  display: grid;
+  gap: 18px;
+  border: 1px solid rgba(184, 190, 205, 0.14);
+  border-radius: 8px;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.timeline-index {
+  display: inline-grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border-radius: 50%;
+  color: #05080d;
+  background: #d2b95d;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.timeline-list strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #f4f1e8;
+}
+
+.timeline-list p {
+  margin: 0;
+  color: #a8a9b5;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
 .submission-card {
   min-height: 260px;
   border: 1px solid rgba(184, 190, 205, 0.16);
@@ -567,6 +702,18 @@ main {
   .site-footer {
     padding: 28px;
   }
+
+  .timeline-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .find-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .timeline-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 760px) {
@@ -577,6 +724,10 @@ main {
 
   .site-nav {
     min-height: auto;
+  }
+
+  .brand img {
+    width: 128px;
   }
 
   .site-nav,
@@ -601,6 +752,7 @@ main {
 
   .dashboard-toolbar {
     align-items: flex-start;
+    gap: 14px;
   }
 
   .category-actions {
@@ -608,11 +760,56 @@ main {
   }
 
   .category-button {
-    flex: 1 1 180px;
+    flex: 1 1 145px;
     justify-content: space-between;
+  }
+
+  .search-input {
+    flex-basis: 100%;
+  }
+
+  .section-heading {
+    margin-top: 42px;
+  }
+
+  .empty-state-card,
+  .find-hero,
+  .timeline-panel,
+  .detail-modal {
+    padding: 22px;
+  }
+
+  .find-panel dl,
+  .timeline-list,
+  .detail-summary {
+    grid-template-columns: 1fr;
   }
 
   .submission-card {
     min-height: 320px;
+  }
+
+  .site-footer a {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 430px) {
+  .page-shell {
+    width: min(100% - 20px, 1720px);
+  }
+
+  .site-nav,
+  .dashboard-toolbar,
+  .site-footer {
+    padding: 20px;
+  }
+
+  .category-button {
+    flex-basis: 100%;
+  }
+
+  .detail-modal-backdrop {
+    padding: 10px;
   }
 }
