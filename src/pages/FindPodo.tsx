@@ -8,17 +8,17 @@ const categoryOptions: Array<{ key: DataCategory; label: string; description: st
   {
     key: 'locations',
     label: 'Locations',
-    description: 'Konum ve adres alanlari',
+    description: 'Location and address fields',
   },
   {
     key: 'notes',
     label: 'Notes',
-    description: 'Not, mesaj ve aciklama alanlari',
+    description: 'Notes, messages, and description fields',
   },
   {
     key: 'times',
     label: 'Times',
-    description: 'Tarih ve zaman bilgileri',
+    description: 'Date and time details',
   },
 ]
 
@@ -26,17 +26,17 @@ const filterOptions: Array<{ key: FilterKey; label: string; placeholder: string 
   {
     key: 'personName',
     label: 'Person Name',
-    placeholder: 'Kisi adi yaz...',
+    placeholder: 'Type a person name...',
   },
   {
     key: 'authorName',
     label: 'Author Name',
-    placeholder: 'Yazar adi yaz...',
+    placeholder: 'Type an author name...',
   },
   {
     key: 'seenWith',
     label: 'Seen With',
-    placeholder: 'Orn: Asli',
+    placeholder: 'E.g. Asli',
   },
 ]
 
@@ -93,8 +93,8 @@ export function FindPodo() {
     ?? filterOptions[0]
   const hasFilterValue = filterValue.trim().length > 0
   const summaryText = hasFilterValue
-    ? `${filteredRecords.length} kayit filtrelendi`
-    : `${allRecords.length} kayit taraniyor`
+    ? `${filteredRecords.length} records filtered`
+    : `${allRecords.length} records scanned`
   const isLoading = Object.values(groupedSubmissions).some((query) => query.isLoading)
   const firstError = Object.values(groupedSubmissions).find((query) => query.error)?.error
 
@@ -106,31 +106,31 @@ export function FindPodo() {
           <h1 id="timeline-title">Podo Route Flow</h1>
 
           <p>
-            Tum veri kaynaklarini birlikte tarayarak kisi, konum, mesaj ve notlar
-            arasindaki ipuclarini hizlica bul.
+            Search across every data source at once to quickly uncover links between
+            people, locations, messages, and notes.
           </p>
         </div>
 
         <div className="find-panel">
           <dl>
             <div>
-              <dt>Kaynak</dt>
+              <dt>Sources</dt>
               <dd>{Object.keys(jotformForms).length}</dd>
             </div>
             <div>
-              <dt>Veri</dt>
+              <dt>Records</dt>
               <dd>{allRecords.length}</dd>
             </div>
           </dl>
         </div>
       </section>
 
-      {isLoading && <p className="status">Veriler yukleniyor...</p>}
+      {isLoading && <p className="status">Loading records...</p>}
 
       {firstError && (
         <p className="status error">
-          Veri cekilirken hata olustu:{' '}
-          {firstError instanceof Error ? firstError.message : 'Bilinmeyen hata'}
+          An error occurred while loading data:{' '}
+          {firstError instanceof Error ? firstError.message : 'Unknown error'}
         </p>
       )}
 
@@ -140,7 +140,7 @@ export function FindPodo() {
 
           <section className="data-explorer" aria-labelledby="data-explorer-title">
             <div className="data-explorer-controls">
-              <div className="insight-picker" aria-label="Veri turu">
+              <div className="insight-picker" aria-label="Data type">
                 {categoryOptions.map((option) => (
                   <button
                     type="button"
@@ -156,7 +156,7 @@ export function FindPodo() {
               </div>
 
               <div className="insight-filter-panel">
-                <div className="insight-filter-grid" aria-label="Filtre turu">
+                <div className="insight-filter-grid" aria-label="Filter type">
                   {filterOptions.map((option) => (
                     <button
                       type="button"
@@ -189,9 +189,9 @@ export function FindPodo() {
                 <div className="section-heading">
                   <div>
                     <p className="eyebrow">{activeCategory?.label}</p>
-                    <h2 id="data-explorer-title">Kategoriye gore veri akisi</h2>
+                    <h2 id="data-explorer-title">Data stream by category</h2>
                   </div>
-                  <p>{visibleInsights.length} sonuc, {summaryText}</p>
+                  <p>{visibleInsights.length} results, {summaryText}</p>
                 </div>
 
                 <ol className="row g-4 location-card-list">
@@ -223,7 +223,7 @@ export function FindPodo() {
 
                         <dl className="location-card-meta">
                           <div>
-                            <dt>Alan</dt>
+                            <dt>Field</dt>
                             <dd>{record.label}</dd>
                           </div>
                           <div>
@@ -238,8 +238,8 @@ export function FindPodo() {
               </>
             ) : (
               <section className="empty-state-card">
-                <h2 id="data-explorer-title">{activeCategory?.label} kaydi bulunamadi.</h2>
-                <p>Secili kategori ve filtre kombinasyonu icin veri gorunmuyor.</p>
+                <h2 id="data-explorer-title">No {activeCategory?.label?.toLowerCase()} records found.</h2>
+                <p>No data is available for the selected category and filter combination.</p>
               </section>
             )}
           </section>
@@ -403,10 +403,10 @@ function getTime(date?: string) {
 
 function formatDate(date?: string) {
   if (!date) {
-    return 'Tarih yok'
+    return 'No date'
   }
 
-  return new Intl.DateTimeFormat('tr-TR', {
+  return new Intl.DateTimeFormat('en-GB', {
     day: '2-digit',
     hour: '2-digit',
     minute: '2-digit',

@@ -26,7 +26,7 @@ export function Timeline({ records }: TimelineProps) {
       </div>
 
       <div className="timeline-content">
-        <div className="timeline-source-list" aria-label="Timeline kaynak filtresi">
+        <div className="timeline-source-list" aria-label="Timeline source filter">
           {sources.map((source) => (
             <button
               type="button"
@@ -55,7 +55,7 @@ export function Timeline({ records }: TimelineProps) {
           </ol>
         ) : (
           <div className="timeline-empty">
-            Bu kaynak icin timeline kaydi bulunamadi.
+            No timeline entries were found for this source.
           </div>
         )}
       </div>
@@ -92,10 +92,10 @@ function getTime(date?: string) {
 
 function formatDate(date?: string) {
   if (!date) {
-    return 'Tarih yok'
+    return 'No date'
   }
 
-  return new Intl.DateTimeFormat('tr-TR', {
+  return new Intl.DateTimeFormat('en-GB', {
     day: '2-digit',
     hour: '2-digit',
     minute: '2-digit',
@@ -112,7 +112,7 @@ function getTimelineLabel(submission: JotformSubmission) {
   })
 
   if (!firstAnswer) {
-    return `Record #${submission.id.slice(-4)} kaydi alindi.`
+    return `Record #${submission.id.slice(-4)} was captured.`
   }
 
   const value = firstAnswer.prettyFormat ?? firstAnswer.answer

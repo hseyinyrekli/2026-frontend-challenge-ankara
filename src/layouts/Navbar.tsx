@@ -13,9 +13,9 @@ export function Navbar() {
         <img src={jotformLogo} alt="Jotform" />
       </a>
 
-      <nav className="navbar-nav flex-row gap-2 mx-lg-auto" aria-label="Ana navigasyon">
+      <nav className="navbar-nav flex-row gap-2 mx-lg-auto" aria-label="Primary navigation">
         <Link to="/" className="nav-link" activeProps={{ className: 'active' }}>
-          Ana Sayfa
+          Home
         </Link>
         <Link to="/find-podo" className="nav-link" activeProps={{ className: 'active' }}>
           Find Podo

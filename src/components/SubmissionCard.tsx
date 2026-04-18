@@ -8,7 +8,7 @@ export function SubmissionCard({ submission }: SubmissionCardProps) {
   const answers = Object.entries(submission.answers ?? {})
   const title = getTitle(answers)
   const description = getDescription(answers)
-  const createdAt = submission.created_at ?? 'Tarih yok'
+  const createdAt = submission.created_at ?? 'No date'
 
   return (
     <>
@@ -17,11 +17,11 @@ export function SubmissionCard({ submission }: SubmissionCardProps) {
           type="button"
           className="submission-card-button"
           onClick={() => setIsModalOpen(true)}
-          aria-label={`${title} detaylarini ac`}
+          aria-label={`Open details for ${title}`}
         >
           <header className="submission-card-header card-header">
             <span>Record #{submission.id.slice(-4)}</span>
-            <strong>Detay</strong>
+            <strong>Details</strong>
           </header>
 
           <div className="card-body">
@@ -52,7 +52,7 @@ export function SubmissionCard({ submission }: SubmissionCardProps) {
 function getTitle(answers: AnswerEntries) {
   const answer = answers.find(([, item]) => Boolean(formatAnswer(item) && formatAnswer(item) !== '-'))
 
-  return answer ? String(formatAnswer(answer[1])).slice(0, 48) : 'Yeni kayit'
+  return answer ? String(formatAnswer(answer[1])).slice(0, 48) : 'New record'
 }
 
 function getDescription(answers: AnswerEntries) {
@@ -63,7 +63,7 @@ function getDescription(answers: AnswerEntries) {
 
   return values.length > 0
     ? values.join(' - ').slice(0, 96)
-    : 'Bu kayit icin temel detaylar alindi.'
+    : 'Basic details were captured for this record.'
 }
 
 function formatAnswer(answer: JotformAnswer) {

@@ -20,7 +20,7 @@ export function Home() {
   return (
     <>
         <section className="dashboard-toolbar">
-          <div className="category-actions" aria-label="Veri kategorileri">
+          <div className="category-actions" aria-label="Data categories">
             {(Object.entries(jotformForms) as [JotformFormKey, (typeof jotformForms)[JotformFormKey]][]).map(
               ([key, form]) => (
                 <FormStatCard
@@ -44,15 +44,15 @@ export function Home() {
           <div>
             <p className="eyebrow">{selectedFormMeta.label}</p>
           </div>
-          <p>{filteredSubmissions.length} kayit goruntuleniyor</p>
+          <p>{filteredSubmissions.length} records shown</p>
         </section>
 
-        {selectedQuery.isLoading && <p className="status">Veriler yukleniyor...</p>}
+        {selectedQuery.isLoading && <p className="status">Loading records...</p>}
 
         {selectedQuery.error && (
           <p className="status error">
-            Veri cekilirken hata olustu:{' '}
-            {selectedQuery.error instanceof Error ? selectedQuery.error.message : 'Bilinmeyen hata'}
+            An error occurred while loading data:{' '}
+            {selectedQuery.error instanceof Error ? selectedQuery.error.message : 'Unknown error'}
           </p>
         )}
 

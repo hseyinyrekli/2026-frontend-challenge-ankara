@@ -3,7 +3,7 @@ import type { JotformAnswer } from '../types/jotform'
 
 export function SubmissionDetailModal({ onClose, submission, title }: SubmissionDetailModalProps) {
   const answers = Object.entries(submission.answers ?? {})
-  const createdAt = submission.created_at ?? 'Tarih yok'
+  const createdAt = submission.created_at ?? 'No date'
 
   return (
     <div className="detail-modal-backdrop" role="presentation" onClick={onClose}>
@@ -19,7 +19,7 @@ export function SubmissionDetailModal({ onClose, submission, title }: Submission
             <span>Record #{submission.id}</span>
             <h2 id={`submission-${submission.id}-title`}>{title}</h2>
           </div>
-          <button type="button" onClick={onClose} aria-label="Detay modalini kapat">
+          <button type="button" onClick={onClose} aria-label="Close detail modal">
             X
           </button>
         </header>
@@ -46,7 +46,7 @@ export function SubmissionDetailModal({ onClose, submission, title }: Submission
         <div className="detail-answer-list">
           {answers.map(([answerId, answer]) => (
             <article key={answerId}>
-              <span>{answer.text ?? answer.name ?? `Soru ${answerId}`}</span>
+              <span>{answer.text ?? answer.name ?? `Question ${answerId}`}</span>
               <p>{formatAnswer(answer)}</p>
             </article>
           ))}
