@@ -6,3 +6,4 @@ I’ll describe every change step by step.
 
 1- The project was set up using Vite.
 2- After setting up the project, I configured the endpoint in the .env file, implemented a service layer to fetch data using Axios, and handled state management with TanStack Query.
+3- I partially developed the UI, organized the layout and component structure, and used Bootstrap along with pure CSS for styling.

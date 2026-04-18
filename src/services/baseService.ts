@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQueries, useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 
 export const jotformForms = {
@@ -131,5 +131,24 @@ export function useJotformSubmissions(formKey: JotformFormKey) {
   return useQuery({
     queryKey: ['jotform', 'submissions', formKey],
     queryFn: () => getJotformSubmissions(formKey),
+  })
+}
+
+export function useJotformSubmissionGroups() {
+  const formKeys = Object.keys(jotformForms) as JotformFormKey[]
+
+  return useQueries({
+    queries: formKeys.map((formKey) => ({
+      queryKey: ['jotform', 'submissions', formKey],
+      queryFn: () => getJotformSubmissions(formKey),
+    })),
+    combine: (results) =>
+      formKeys.reduce(
+        (acc, formKey, index) => ({
+          ...acc,
+          [formKey]: results[index],
+        }),
+        {} as Record<JotformFormKey, (typeof results)[number]>,
+      ),
   })
 }

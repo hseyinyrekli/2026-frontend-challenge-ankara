@@ -1,57 +1,67 @@
 import { useState } from 'react'
+import { FormStatCard } from '../components/FormStatCard'
 import { SubmissionCard } from '../components/SubmissionCard'
+import { MainLayout } from '../layouts/MainLayout'
 import {
   jotformForms,
   type JotformFormKey,
-  useJotformSubmissions,
+  useJotformSubmissionGroups,
 } from '../services/baseService'
 
 export function Home() {
   const [selectedForm, setSelectedForm] = useState<JotformFormKey>('checkins')
-  const { data, error, isLoading } = useJotformSubmissions(selectedForm)
-  const submissions = Array.isArray(data) ? data : []
+  const groupedSubmissions = useJotformSubmissionGroups()
+  const selectedQuery = groupedSubmissions[selectedForm]
+  const submissions = Array.isArray(selectedQuery.data) ? selectedQuery.data : []
   const selectedFormMeta = jotformForms[selectedForm]
 
   return (
-    <main className="app-shell">
-      <section className="app-header">
-        <div>
-          <p className="eyebrow">Jotform Data</p>
-          <h1>{selectedFormMeta.label}</h1>
-        </div>
-        <select
-          aria-label="Form seç"
-          value={selectedForm}
-          onChange={(event) => setSelectedForm(event.target.value as JotformFormKey)}
-        >
-          {Object.entries(jotformForms).map(([key, form]) => (
-            <option key={key} value={key}>
-              {form.label}
-            </option>
-          ))}
-        </select>
-      </section>
-
-      {isLoading && <p className="status">Veriler yükleniyor...</p>}
-
-      {error && (
-        <p className="status error">
-          Veri çekilirken hata oluştu: {error instanceof Error ? error.message : 'Bilinmeyen hata'}
-        </p>
-      )}
-
-      {!isLoading && !error && (
-        <section className="submissions">
-          <div className="summary">
-            <span>{submissions.length}</span>
-            <p>kayıt bulundu</p>
+    <MainLayout>
+        <section className="dashboard-toolbar">
+          <div className="category-actions" aria-label="Veri kategorileri">
+            {(Object.entries(jotformForms) as [JotformFormKey, (typeof jotformForms)[JotformFormKey]][]).map(
+              ([key, form]) => (
+                <FormStatCard
+                  key={key}
+                  count={Array.isArray(groupedSubmissions[key].data) ? groupedSubmissions[key].data.length : 0}
+                  formKey={key}
+                  isActive={selectedForm === key}
+                  label={form.label}
+                  onSelect={setSelectedForm}
+                />
+              ),
+            )}
           </div>
-
-          {submissions.map((submission) => (
-            <SubmissionCard key={submission.id} submission={submission} />
-          ))}
         </section>
-      )}
-    </main>
+
+        <section
+          className="section-heading d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-3"
+          id="records"
+        >
+          <div>
+            <p className="eyebrow">{selectedFormMeta.label}</p>
+          </div>
+          <p>{submissions.length} kayit goruntuleniyor</p>
+        </section>
+
+        {selectedQuery.isLoading && <p className="status">Veriler yukleniyor...</p>}
+
+        {selectedQuery.error && (
+          <p className="status error">
+            Veri cekilirken hata olustu:{' '}
+            {selectedQuery.error instanceof Error ? selectedQuery.error.message : 'Bilinmeyen hata'}
+          </p>
+        )}
+
+        {!selectedQuery.isLoading && !selectedQuery.error && (
+          <section className="row g-4">
+            {submissions.map((submission) => (
+              <div className="col-md-6 col-xl-4" key={submission.id}>
+                <SubmissionCard submission={submission} />
+              </div>
+            ))}
+          </section>
+        )}
+    </MainLayout>
   )
 }
