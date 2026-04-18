@@ -4,6 +4,11 @@ import jotformLogo from '../assets/images/jotformlogo.png'
 export function Navbar() {
   return (
     <header className="site-nav navbar navbar-expand-lg">
+      <div className="nav-meta">
+        <span>Missing Podo</span>
+        <strong>Ankara Case</strong>
+      </div>
+
       <a className="brand navbar-brand" href="/">
         <img src={jotformLogo} alt="Jotform" />
       </a>
@@ -16,11 +21,6 @@ export function Navbar() {
           Find Podo
         </Link>
       </nav>
-
-      <div className="nav-meta">
-        <span>Missing Podo</span>
-        <strong>Ankara Case</strong>
-      </div>
     </header>
   )
 }

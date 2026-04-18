@@ -1,10 +1,5 @@
-import type { JotformAnswer, JotformSubmission } from '../services/baseService'
-
-type SubmissionDetailModalProps = {
-  onClose: () => void
-  submission: JotformSubmission
-  title: string
-}
+import type { SubmissionDetailModalProps } from '../types/components'
+import type { JotformAnswer } from '../types/jotform'
 
 export function SubmissionDetailModal({ onClose, submission, title }: SubmissionDetailModalProps) {
   const answers = Object.entries(submission.answers ?? {})

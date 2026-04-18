@@ -1,5 +1,11 @@
 import { useQueries, useQuery } from '@tanstack/react-query'
 import axios from 'axios'
+import type {
+  JotformFormKey,
+  JotformResponse,
+  JotformSubmission,
+  JotformSubmissionsContent,
+} from '../types/jotform'
 
 export const jotformForms = {
   checkins: {
@@ -23,40 +29,6 @@ export const jotformForms = {
     formId: import.meta.env.VITE_JOTFORM_ANONYMOUS_TIPS_FORM_ID,
   },
 } as const
-
-export type JotformFormKey = keyof typeof jotformForms
-
-export type JotformAnswer = {
-  name?: string
-  order?: string
-  text?: string
-  type?: string
-  answer?: unknown
-  prettyFormat?: string
-}
-
-export type JotformSubmission = {
-  id: string
-  form_id: string
-  ip?: string
-  created_at?: string
-  updated_at?: string
-  status?: string
-  answers?: Record<string, JotformAnswer>
-}
-
-type JotformResponse<T> = {
-  responseCode: number
-  message: string
-  content: T
-}
-
-type JotformSubmissionsContent =
-  | JotformSubmission[]
-  | { submissions?: JotformSubmission[] }
-  | Record<string, JotformSubmission>
-  | string
-  | null
 
 const apiKey = import.meta.env.VITE_JOTFORM_API_KEY?.trim()
 

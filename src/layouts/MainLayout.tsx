@@ -1,10 +1,6 @@
-import type { ReactNode } from 'react'
+import type { MainLayoutProps } from '../types/components'
 import { Footer } from './Footer'
 import { Navbar } from './Navbar'
-
-type MainLayoutProps = {
-  children: ReactNode
-}
 
 export function MainLayout({ children }: MainLayoutProps) {
   return (

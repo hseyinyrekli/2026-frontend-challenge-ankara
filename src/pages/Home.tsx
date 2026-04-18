@@ -3,12 +3,8 @@ import { EmptyStateCard } from '../components/EmptyStateCard'
 import { FormStatCard } from '../components/FormStatCard'
 import { SearchInput } from '../components/SearchInput'
 import { SubmissionCard } from '../components/SubmissionCard'
-import { Timeline } from '../components/Timeline'
-import {
-  jotformForms,
-  type JotformFormKey,
-  useJotformSubmissionGroups,
-} from '../services/baseService'
+import { jotformForms, useJotformSubmissionGroups } from '../services/baseService'
+import type { JotformFormKey } from '../types/jotform'
 
 export function Home() {
   const [selectedForm, setSelectedForm] = useState<JotformFormKey>('checkins')
@@ -62,17 +58,13 @@ export function Home() {
 
         {!selectedQuery.isLoading && !selectedQuery.error && (
           filteredSubmissions.length > 0 ? (
-            <>
-              <Timeline submissions={filteredSubmissions} />
-
-              <section className="row g-4">
-                {filteredSubmissions.map((submission) => (
-                  <div className="col-md-6 col-xl-4" key={submission.id}>
-                    <SubmissionCard submission={submission} />
-                  </div>
-                ))}
-              </section>
-            </>
+            <section className="row g-4">
+              {filteredSubmissions.map((submission) => (
+                <div className="col-md-6 col-xl-4" key={submission.id}>
+                  <SubmissionCard submission={submission} />
+                </div>
+              ))}
+            </section>
           ) : (
             <EmptyStateCard />
           )

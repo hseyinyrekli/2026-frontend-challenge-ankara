@@ -1,10 +1,7 @@
 import { useState } from 'react'
-import type { JotformAnswer, JotformSubmission } from '../services/baseService'
+import type { AnswerEntries, SubmissionCardProps } from '../types/components'
+import type { JotformAnswer } from '../types/jotform'
 import { SubmissionDetailModal } from './SubmissionDetailModal'
-
-type SubmissionCardProps = {
-  submission: JotformSubmission
-}
 
 export function SubmissionCard({ submission }: SubmissionCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -52,13 +49,13 @@ export function SubmissionCard({ submission }: SubmissionCardProps) {
   )
 }
 
-function getTitle(answers: [string, JotformAnswer][]) {
+function getTitle(answers: AnswerEntries) {
   const answer = answers.find(([, item]) => Boolean(formatAnswer(item) && formatAnswer(item) !== '-'))
 
   return answer ? String(formatAnswer(answer[1])).slice(0, 48) : 'Yeni kayit'
 }
 
-function getDescription(answers: [string, JotformAnswer][]) {
+function getDescription(answers: AnswerEntries) {
   const values = answers
     .map(([, answer]) => formatAnswer(answer))
     .filter((value) => value !== '-')

@@ -1,7 +1,4 @@
-type SearchInputProps = {
-  onSearchChange: (value: string) => void
-  value: string
-}
+import type { SearchInputProps } from '../types/components'
 
 export function SearchInput({ onSearchChange, value }: SearchInputProps) {
   return (
