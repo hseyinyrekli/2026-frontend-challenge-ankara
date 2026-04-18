@@ -1,5 +1,7 @@
 import { useState } from 'react'
+import { EmptyStateCard } from '../components/EmptyStateCard'
 import { FormStatCard } from '../components/FormStatCard'
+import { SearchInput } from '../components/SearchInput'
 import { SubmissionCard } from '../components/SubmissionCard'
 import { MainLayout } from '../layouts/MainLayout'
 import {
@@ -10,9 +12,13 @@ import {
 
 export function Home() {
   const [selectedForm, setSelectedForm] = useState<JotformFormKey>('checkins')
+  const [searchTerm, setSearchTerm] = useState('')
   const groupedSubmissions = useJotformSubmissionGroups()
   const selectedQuery = groupedSubmissions[selectedForm]
   const submissions = Array.isArray(selectedQuery.data) ? selectedQuery.data : []
+  const filteredSubmissions = submissions.filter((submission) =>
+    JSON.stringify(submission).toLowerCase().includes(searchTerm.trim().toLowerCase()),
+  )
   const selectedFormMeta = jotformForms[selectedForm]
 
   return (
@@ -32,6 +38,7 @@ export function Home() {
               ),
             )}
           </div>
+          <SearchInput value={searchTerm} onSearchChange={setSearchTerm} />
         </section>
 
         <section
@@ -41,7 +48,7 @@ export function Home() {
           <div>
             <p className="eyebrow">{selectedFormMeta.label}</p>
           </div>
-          <p>{submissions.length} kayit goruntuleniyor</p>
+          <p>{filteredSubmissions.length} kayit goruntuleniyor</p>
         </section>
 
         {selectedQuery.isLoading && <p className="status">Veriler yukleniyor...</p>}
@@ -54,13 +61,17 @@ export function Home() {
         )}
 
         {!selectedQuery.isLoading && !selectedQuery.error && (
-          <section className="row g-4">
-            {submissions.map((submission) => (
-              <div className="col-md-6 col-xl-4" key={submission.id}>
-                <SubmissionCard submission={submission} />
-              </div>
-            ))}
-          </section>
+          filteredSubmissions.length > 0 ? (
+            <section className="row g-4">
+              {filteredSubmissions.map((submission) => (
+                <div className="col-md-6 col-xl-4" key={submission.id}>
+                  <SubmissionCard submission={submission} />
+                </div>
+              ))}
+            </section>
+          ) : (
+            <EmptyStateCard />
+          )
         )}
     </MainLayout>
   )
